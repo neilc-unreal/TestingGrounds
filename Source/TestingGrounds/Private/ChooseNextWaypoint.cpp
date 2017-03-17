@@ -4,7 +4,7 @@
 #include "ChooseNextWaypoint.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AIController.h"
-#include "PatrollingGuard.h"
+#include "PatrolComponent.h"
 
 EBTNodeResult::Type UChooseNextWaypoint::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
@@ -13,12 +13,22 @@ EBTNodeResult::Type UChooseNextWaypoint::ExecuteTask(UBehaviorTreeComponent& Own
 	auto CurrentIndex = BlackboardComponent->GetValueAsInt(Index.SelectedKeyName);
 	
 	auto AIController = OwnerComp.GetAIOwner();
-	APatrollingGuard *Gaurd = Cast<APatrollingGuard>(AIController->GetPawn());
+	if (!AIController) {
+		EBTNodeResult::Failed;
+	}
+	auto Pawn = AIController->GetPawn();
+	if (!Pawn) {
+		return EBTNodeResult::Failed;
+	}
 
-	auto Waypoints = Gaurd->Waypoints_CPP;
-	auto NextWayPoint = (CurrentIndex + 1) % Waypoints.Num();
-	BlackboardComponent->SetValueAsInt(Index.SelectedKeyName, NextWayPoint);
-	BlackboardComponent->SetValueAsObject(Waypoint.SelectedKeyName, Waypoints[NextWayPoint]);
+	UPatrolComponent *PatrolComponent = Pawn->FindComponentByClass<UPatrolComponent>();
+	if (PatrolComponent) {
+		auto Waypoints = PatrolComponent->PatrolWaypoints;
+		auto NextWayPoint = (CurrentIndex + 1) % Waypoints.Num();
+		BlackboardComponent->SetValueAsInt(Index.SelectedKeyName, NextWayPoint);
+		BlackboardComponent->SetValueAsObject(Waypoint.SelectedKeyName, Waypoints[NextWayPoint]);
+	}
+
 
 	return EBTNodeResult::Succeeded;
 }
