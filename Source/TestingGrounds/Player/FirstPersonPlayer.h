@@ -1,12 +1,12 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 #pragma once
 #include "GameFramework/Character.h"
-#include "TestingGroundsCharacter.generated.h"
+#include "FirstPersonPlayer.generated.h"
 
 class UInputComponent;
 
 UCLASS(config=Game)
-class ATestingGroundsCharacter : public ACharacter
+class AFirstPersonPlayer : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -43,7 +43,7 @@ class ATestingGroundsCharacter : public ACharacter
 	class UMotionControllerComponent* L_MotionController;
 
 public:
-	ATestingGroundsCharacter();
+	AFirstPersonPlayer();
 
 protected:
 	virtual void BeginPlay();
