@@ -77,6 +77,7 @@ void AFirstPersonPlayer::BeginPlay()
 		if (ensure(Gun)) {
 			//Attach gun mesh component to Skeleton, doing it here because the skeleton is not yet created in the constructor
 			Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
+			Gun->AnimInstance = Mesh1P->GetAnimInstance();
 		}
 	}
 
