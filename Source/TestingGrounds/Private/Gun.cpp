@@ -11,7 +11,6 @@ AGun::AGun()
 	FP_Gun = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FP_Gun"));
 	FP_Gun->bCastDynamicShadow = false;
 	FP_Gun->CastShadow = false;
-	// FP_Gun->SetupAttachment(Mesh1P, TEXT("GripPoint"));
 	FP_Gun->SetupAttachment(RootComponent);
 
 	FP_MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
@@ -26,10 +25,6 @@ AGun::AGun()
 
 void AGun::BeginPlay()
 {	
-//	USceneComponent *RootComponent = GetOwner()->GetRootComponent();
-//	if (ensure(RootComponent)) {
-		FP_Gun->SetupAttachment(RootComponent);
-//	}
 }
 
 void AGun::OnFire()
