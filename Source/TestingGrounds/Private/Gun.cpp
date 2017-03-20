@@ -46,10 +46,11 @@ void AGun::OnFire()
 
 			//Set Spawn Collision Handling Override
 			FActorSpawnParameters ActorSpawnParams;
+			ActorSpawnParams.Owner = OwnerAsPawn;
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 
 			// spawn the projectile at the muzzle
-			World->SpawnActor<ATestingGroundsProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+			auto Projectile = World->SpawnActor<ATestingGroundsProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
 		}
 	}
 
